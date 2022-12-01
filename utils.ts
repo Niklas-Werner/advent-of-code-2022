@@ -1,5 +1,5 @@
-import { Awaitable, TwoWayMap } from '@nw55/common';
-import { Log, LogLevel } from '@nw55/logging';
+import { AnyRecord, Awaitable, TwoWayMap } from '@nw55/common';
+import { Log, logFormat, LogLevel } from '@nw55/logging';
 import { createConsoleLogWriter, runMain, tryReadTextFile } from '@nw55/node-utils';
 import chalk from 'chalk';
 import { resolve } from 'path';
@@ -7,10 +7,15 @@ import { resolve } from 'path';
 Log.addGlobalLogWriter(createConsoleLogWriter({
     filter: LogLevel.All,
     colorStyler: chalk,
-    logDetails: true
+    logDetails: true,
+    format: logFormat`[${'time'}] ${logFormat.level('symbol')}: ${'message'}`
 }));
 
 export const dayLogger = Log.createLogger('day');
+
+export function logResult(result: unknown) {
+    dayLogger.info('result', typeof result === 'object' && result !== null ? result as AnyRecord : { value: result });
+}
 
 export async function readNonEmptyLines(...pathSegments: string[]) {
     const file = resolve(...pathSegments);

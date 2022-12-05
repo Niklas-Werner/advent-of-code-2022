@@ -120,3 +120,7 @@ export const splitOnce = (separator: string) => (str: string) => {
 };
 
 export const notNull = <T>(value: T | null): value is T => value !== null;
+
+export function jsonClone<T>(value: T): T {
+    return JSON.parse(JSON.stringify(value));
+}

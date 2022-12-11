@@ -107,7 +107,7 @@ export function backtrackMatch<K, V>(candidates: Iterable<readonly [K, Iterable<
 
 export const compareStrings = (a: string, b: string) => a > b ? 1 : b > a ? -1 : 0;
 
-export const parseDecimalInt = (x: string) => parseInt(x);
+export const parseDecimalInt = (x: string) => parseInt(x.trim());
 
 export const splitOnce = (separator: string) => (str: string) => {
     const index = str.indexOf(separator);
